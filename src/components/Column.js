@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Task from './Task';
+import Adder from './Adder';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
@@ -35,6 +36,40 @@ const TaskList = styled.div`
 
 
 export default class Column extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEditing: false,
+      title: this.props.column.title
+    }
+  }
+
+
+  changeTitle = (e) => {
+    this.setState({
+      title: e.target.value
+    })
+  }
+
+  toggleEdit = (id) => {
+    this.setState({
+      isEditing: true
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.setState({
+      isEditing: false
+    })
+  }
+
+  blurHandle = () => {
+    this.setState({
+      title: this.state.title,
+      isEditing: false
+    })
+  }
 
   renderTasks(tasks) {
     let arr = Array.from(tasks);
@@ -49,7 +84,11 @@ export default class Column extends React.Component {
       <Draggable draggableId={this.props.column.id} index={this.props.index}>
       {(provided) => (
         <Container {...provided.draggableProps} innerRef={provided.innerRef}>
-          <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
+          <Title onClick={(e) => this.toggleEdit(this.props.column.id)} {...provided.dragHandleProps}>
+            {this.state.isEditing ?
+              <form onSubmit={(e) => this.handleSubmit(e)}><input autoFocus className="editTitle" onChange={(e) => this.changeTitle(e)} value={this.state.title} onBlur={this.blurHandle} /></form>
+              : <span>{this.state.title}</span>}
+          </Title>
           <Droppable droppableId={this.props.column.id} type="task">
           {(provided, snapshot) => (
             <TaskList innerRef={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>
@@ -58,7 +97,7 @@ export default class Column extends React.Component {
             </TaskList>
           )}
           </Droppable>
-          <div>Add Item</div>
+          <Adder columnId={this.props.column.id}/>
         </Container>
       )}
       </Draggable>

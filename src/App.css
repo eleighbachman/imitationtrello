@@ -6,7 +6,9 @@
 /* Global Colors
 CHERRY-JELLO: ff0000
 GRAY: ddd
-WHITE:
+WHITE: fff
+SALMON: f96a6a
+DARK PINK: dd5a5a
 
 */
 
@@ -24,6 +26,57 @@ WHITE:
 /* Column Styles */
 .listTitle {
   border: 2px solid #ff0000;
+}
+
+.editTitle {
+  font-style: italic;
+  width: 80%;
+  margin: auto;
+  border-radius: 5px;
+  background-color: #ddd;
+  font-size: 14px;
+  text-align: center;
+}
+
+.addTask {
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.addTask input {
+  margin: auto;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-right: 5px;
+  text-align: center;
+  font-style: italic;
+  color: #777;
+}
+
+.addTask button {
+  border: 0px;
+  font-size: 20px;
+  border-radius: 100px;
+  background-color: #dd5a5a;
+  outline: none;
+  margin-top: 5px;
+}
+
+.addBtn {
+  display: inline-block;
+  margin-bottom: 2px;
+  color: #f96a6a;
+}
+
+.addBtn:hover {
+  color: #fff;
+}
+
+.addTask button:hover {
+  cursor: pointer;
+
 }
 
 /* Task Styles */

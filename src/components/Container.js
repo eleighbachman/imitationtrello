@@ -33,8 +33,6 @@ class Container extends React.Component {
       newColumnOrdering.splice(source.index, 1);
       newColumnOrdering.splice(destination.index, 0, draggableId);
 
-      const newOrder = [newColumnOrdering];
-
       return this.props.newColumnOrder(newColumnOrdering);
 
 

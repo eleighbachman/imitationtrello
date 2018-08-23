@@ -1,6 +1,7 @@
 export const REORDERED_TASK = 'REORDERED_TASK';
 export const REORDERED_TASK_NEW_COL = 'REORDERED_TASK_NEW_COL';
 export const NEW_COLUMN_ORDER = 'NEW_COLUMN_ORDER';
+export const ADD_TASK = 'ADD_TASK';
 
 
 export function reorderTask(column) {
@@ -21,5 +22,12 @@ export function newColumnOrder(columnOrder) {
   return {
     type: NEW_COLUMN_ORDER,
     payload: columnOrder
+  }
+}
+
+export function addTask(task) {
+  return {
+    type: ADD_TASK,
+    payload: task
   }
 }
