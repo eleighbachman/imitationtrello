@@ -1,15 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Column from './Column';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { bindActionCreators } from 'redux';
-import { reorderTask } from '../actions';
+import { reorderTask, reorderedTaskNewCol, newColumnOrder } from '../actions';
+import styled from 'styled-components';
 
+const Outline = styled.div`
+  display:flex;
+  width: 90%;
+  margin: auto;
+  justify-content: center;
+`;
 class Container extends React.Component {
 
 
+
   onDragEnd = result => {
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
     if (!destination) {
       return;
     }
@@ -20,47 +28,88 @@ class Container extends React.Component {
       return;
     }
 
-    const column = this.props.columns[source.droppableId];
-    const newTaskIds = Array.from(column.taskIds);
+    if (type === 'column') {
+      const newColumnOrdering = Array.from(this.props.columnOrder);
+      newColumnOrdering.splice(source.index, 1);
+      newColumnOrdering.splice(destination.index, 0, draggableId);
 
-    newTaskIds.splice(source.index, 1);
-    newTaskIds.splice(destination.index, 0, draggableId);
+      const newOrder = [newColumnOrdering];
 
-    const newColumn = {
-      ...column,
-      taskIds: newTaskIds
+      return this.props.newColumnOrder(newColumnOrdering);
+
+
     }
 
-    this.props.reorderTask(newColumn);
 
-    // Dispatch an action here to take the new state of the columns
-    // and update it
+    const start = this.props.columns[source.droppableId];
+    const finish = this.props.columns[destination.droppableId];
 
-    // const newState = {
-    //   ...this.state,
-    //   columns: {
-    //     ...this.state.columns,
-    //     [newColumn.id]: newColumn
-    //   }
-    // }
+    if(start === finish) {
+      const newTaskIds = Array.from(start.taskIds);
+
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
+
+      const newColumn = {
+        ...start,
+        taskIds: newTaskIds
+      }
+
+      this.props.reorderTask(newColumn);
+      return;
+    }
+
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds
+    };
+
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destination.index, 0, draggableId);
+
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds
+    }
+
+    const combine = [newStart, newFinish];
+
+    this.props.reorderedTaskNewCol(combine);
+
+
+
   }
 
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        {
-          this.props.columnOrder.map((columnId) => {
-          const column = this.props.columns[columnId];
-          const tasks = column.taskIds.map(taskId => this.props.tasks[taskId]);
-          return <Column key={column.id} column={column} tasks={tasks} />})
-        }
+        <Droppable droppableId="all-columns" direction="horizontal" type="column">
+        { (provided) => (
+          <Outline {...provided.droppableProps} innerRef={provided.innerRef}>
+
+          {
+            this.props.columnOrder.map((columnId, index) => {
+            const column = this.props.columns[columnId];
+            const tasks = column.taskIds.map(taskId => this.props.tasks[taskId]);
+            return <Column key={column.id} index={index} column={column} tasks={tasks} />})
+          }
+
+          </Outline>
+        )}
+        </Droppable>
       </DragDropContext>
     )
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ reorderTask: reorderTask}, dispatch);
+  return bindActionCreators({
+    reorderTask: reorderTask,
+    reorderedTaskNewCol: reorderedTaskNewCol,
+    newColumnOrder: newColumnOrder
+  }, dispatch);
 }
 
 function mapStateToProps(state) {
