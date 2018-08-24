@@ -43,6 +43,8 @@ class Task extends React.Component {
     })
   }
 
+
+
   handleNameChange = (e) => {
     this.setState({
       taskName: e.target.value
@@ -54,6 +56,7 @@ class Task extends React.Component {
 
         {(provided, snapshot) => (
           <TaskContainer
+            onBlur={this.blurHandle}
             onClick={this.handleClick}
             innerRef={provided.innerRef}
             {...provided.draggableProps}
@@ -62,9 +65,9 @@ class Task extends React.Component {
 
             {this.state.isEditing?
               <form onSubmit={(e)=>this.handleSubmit(e, this.props.task.id)}>
-                <input autoFocus type="text" onBlur={this.blurHandle} onChange={(e) => this.handleNameChange(e)} value={this.state.taskName} />
+                <input autoFocus type="text"  onChange={(e) => this.handleNameChange(e)} value={this.state.taskName} />
               </form>
-               : <span>{this.state.taskName}</span>}
+               : <span >{this.state.taskName}</span>}
 
 
             </TaskContainer>

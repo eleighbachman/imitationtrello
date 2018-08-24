@@ -4,6 +4,7 @@ export const NEW_COLUMN_ORDER = 'NEW_COLUMN_ORDER';
 export const ADD_TASK = 'ADD_TASK';
 export const ADD_LIST = 'ADD_LIST';
 export const UPDATE_NAME = 'UPDATE_NAME';
+// export const DELETE_TASK = 'DELETE_TASK';
 
 
 export function reorderTask(column) {
@@ -47,3 +48,10 @@ export function updateName(bundle) {
     payload: bundle
   }
 }
+
+// export function deleteTask(task) {
+//   return {
+//     type: DELETE_TASK,
+//     payload: task
+//   }
+// }

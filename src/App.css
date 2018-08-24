@@ -135,3 +135,18 @@ input {
   cursor: pointer;
 
 }
+
+.del {
+  border: 0px;
+  font-size: 9px;
+  border-radius: 100px;
+  color: #fff;
+  background-color: #ff0000;
+  outline: none;
+  padding: 2px 3px;
+  margin-left: 5px;
+}
+
+.del:hover {
+  cursor:pointer;
+}

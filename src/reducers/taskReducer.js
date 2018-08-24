@@ -1,5 +1,5 @@
-import { ADD_TASK } from '../actions';
-import { UPDATE_NAME } from '../actions';
+import { ADD_TASK, UPDATE_NAME } from '../actions';
+
 
 const tasks = {
       'task-0': { id: 'task-0', content: 'Kiss dove'},
@@ -16,6 +16,11 @@ export default function(state=tasks, action) {
       return {...state, [newTaskId]: { id : [newTaskId], content: taskContent }}
     case UPDATE_NAME:
       return {...state, [action.payload[1]] : { id: [action.payload[1]], content: [action.payload[0]]}}
+    // case DELETE_TASK:
+    //   const taskId = action.payload;
+    //   let newTasks = { state.filter(task => task !== taskId )};
+    //   console.log(newTasks);
+    //   return state;
     default:
       return state;
   }

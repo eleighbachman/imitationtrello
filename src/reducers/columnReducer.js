@@ -1,7 +1,4 @@
-import { REORDERED_TASK } from '../actions';
-import { REORDERED_TASK_NEW_COL } from '../actions';
-import { ADD_TASK } from '../actions';
-import { ADD_LIST } from '../actions';
+import { REORDERED_TASK, REORDERED_TASK_NEW_COL, ADD_TASK, ADD_LIST } from '../actions';
 
 const columns = {
     'column-0': {
