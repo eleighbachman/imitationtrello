@@ -1,5 +1,5 @@
 import { ADD_TASK } from '../actions';
-import _ from 'lodash';
+import { UPDATE_NAME } from '../actions';
 
 const tasks = {
       'task-0': { id: 'task-0', content: 'Kiss dove'},
@@ -11,10 +11,11 @@ const tasks = {
 export default function(state=tasks, action) {
   switch (action.type) {
     case ADD_TASK:
-      let index = action.payload.currentCol;
       let taskContent = action.payload.currentTask;
       let newTaskId = action.payload.newId.toString();
       return {...state, [newTaskId]: { id : [newTaskId], content: taskContent }}
+    case UPDATE_NAME:
+      return {...state, [action.payload[1]] : { id: [action.payload[1]], content: [action.payload[0]]}}
     default:
       return state;
   }

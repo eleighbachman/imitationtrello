@@ -1,6 +1,7 @@
 import { REORDERED_TASK } from '../actions';
 import { REORDERED_TASK_NEW_COL } from '../actions';
 import { ADD_TASK } from '../actions';
+import { ADD_LIST } from '../actions';
 
 const columns = {
     'column-0': {
@@ -24,9 +25,9 @@ export default function(state=columns, action) {
   switch (action.type) {
     case ADD_TASK:
       let currentCol = action.payload.currentCol;
-      let currentTask = action.payload.currentTask;
+      // let currentTask = action.payload.currentTask;
       let newId = action.payload.newId;
-      let stateColTasks = state[currentCol].taskIds;
+      // let stateColTasks = state[currentCol].taskIds;
       let stateCol = state[currentCol];
       let newTasks = stateCol.taskIds.concat([newId]);
       let remainderObject = {...stateCol, taskIds: newTasks}
@@ -41,6 +42,8 @@ export default function(state=columns, action) {
         [action.payload[0].id] : action.payload[0],
         [action.payload[1].id] : action.payload[1]
       }
+    case ADD_LIST:
+      return {...state, [action.payload[0]]: { id: action.payload[0], title: action.payload[1], taskIds: [] }}
     default:
       return state;
   }

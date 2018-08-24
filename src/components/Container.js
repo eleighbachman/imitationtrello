@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import Column from './Column';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { bindActionCreators } from 'redux';
-import { reorderTask, reorderedTaskNewCol, newColumnOrder } from '../actions';
+import { reorderTask, reorderedTaskNewCol, newColumnOrder, addList } from '../actions';
 import styled from 'styled-components';
+import _ from 'lodash';
 
 const Outline = styled.div`
   display:flex;
@@ -13,7 +14,31 @@ const Outline = styled.div`
   justify-content: center;
 `;
 class Container extends React.Component {
+  constructor(props) {
+    super(props);
+      this.state = {
+        newList: ''
+    }
+  }
 
+  handleChange = (e) => {
+    this.setState({
+      newList: e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.newList.replace(/\s/g, '').length) {
+      let newId = "column-" + _.size(this.props.columns);
+      let newName = this.state.newList;
+      let combo = [newId, newName];
+      this.props.addList(combo);
+      this.setState({
+        newList: ''
+      })
+    }
+  }
 
 
   onDragEnd = result => {
@@ -94,6 +119,14 @@ class Container extends React.Component {
             return <Column key={column.id} index={index} column={column} tasks={tasks} />})
           }
 
+          {this.props.columnOrder.length < 4 ? <div className="newCol">
+            <form onSubmit={(e) => this.handleSubmit(e)}>
+              <input className="newColInput" value={this.state.newList} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e)} maxLength="15" placeholder="Add new list" type="text" />
+            </form>
+          </div> : null}
+          
+
+
           </Outline>
         )}
         </Droppable>
@@ -106,7 +139,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     reorderTask: reorderTask,
     reorderedTaskNewCol: reorderedTaskNewCol,
-    newColumnOrder: newColumnOrder
+    newColumnOrder: newColumnOrder,
+    addList: addList
   }, dispatch);
 }
 

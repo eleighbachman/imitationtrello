@@ -1,6 +1,36 @@
+body {
+  background-color: #eee;
+  border-bottom: 50px solid #eee;
+  font-family: 'Raleway', sans-serif;
+}
+
+input, button {
+  outline: none;
+}
+
 .App {
   text-align: center;
+  padding-top: 10px;
+  padding-bottom: 100px;
+  background-image: url('./bg.png');
+  border-top: 4px solid #dd5a5a;
+  border-bottom: 4px solid #dd5a5a;
+}
 
+.container {
+  background-color: #fff;
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+  padding-bottom: 100px;
+  border-radius: 0px 0px 5px 5px;
+  border-bottom: 3px solid #eee;
+}
+
+.quoter {
+  padding-top: 30px;
+  font-style: italic;
+  color: #777;
 }
 
 /* Global Colors
@@ -17,10 +47,20 @@ DARK PINK: dd5a5a
   font-size: 48px;
   border-top: 15px solid #eee;
   -webkit-font-smoothing: antialiased;
-  height: 150px;
+  height: 100px;
   padding: 20px;
-  color: #ff0000;
+  width: 90%;
+  margin: auto;
+  color: #f96a6a;
+  background-color: #fff;
   font-family: 'Lobster', cursive;
+  margin-top: 60px;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.header hr {
+  border: 2px solid pink;
+  width: 90%;
 }
 
 /* Column Styles */
@@ -38,6 +78,18 @@ DARK PINK: dd5a5a
   text-align: center;
 }
 
+.newCol {
+  padding-top: 15px;
+  margin-left: 10px;
+}
+
+::placeholder {
+  color: #eee;
+}
+
+
+/* Task Styles */
+
 .addTask {
   padding: 10px 5px;
   display: flex;
@@ -45,7 +97,7 @@ DARK PINK: dd5a5a
   justify-content: center;
 }
 
-.addTask input {
+input {
   margin: auto;
   border-radius: 5px;
   font-size: 18px;
@@ -53,6 +105,11 @@ DARK PINK: dd5a5a
   text-align: center;
   font-style: italic;
   color: #777;
+}
+
+.newColInput {
+  border-top: 5px solid #f96a6a;
+  padding: 5px 0px;
 }
 
 .addTask button {
@@ -78,5 +135,3 @@ DARK PINK: dd5a5a
   cursor: pointer;
 
 }
-
-/* Task Styles */

@@ -14,9 +14,14 @@ class App extends Component {
         <div className="App">
           <div className="header">
             Imitation Trello
+            <hr/>
           </div>
           <div className="container">
             <Container />
+            <div className="quoter">
+              <p>The ultimate reason for setting goals is to entice you to become the person it takes to achieve them.</p>
+              <p>&mdash;Jim Rohn</p>
+            </div>
           </div>
         </div>
       </Provider>
